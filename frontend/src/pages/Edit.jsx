@@ -1,0 +1,145 @@
+import React, { useState, useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import TaskContext from '../context/Taskcontext';
+
+const Edit = () => {
+
+    const [openStatus, setOpenStatus] = useState(false);
+    const [status, setStatus] = useState("Status");
+    const allStatus = ["To Do", "In Progress", "Done"];
+
+    const [open, setOpen] = useState(false);
+    const [priority, setPriority] = useState("Priority");
+    const allPriority = ["High", "Medium", "Low"];
+
+    const [title, setTitle] = useState("");
+    const [description, setDescription] = useState("");
+
+    const navigate = useNavigate();
+
+    const { task } = useContext(TaskContext);
+
+    useEffect(() => {
+        if (task) {
+            setTitle(task.title);
+            setDescription(task.description);
+            setStatus(task.status || "Status");
+            setPriority(task.priority || "Priority");
+        }
+    },
+        [task]);
+
+    const handleSave = () => {
+        const handleTask = {
+            ...task,
+            title,
+            description,
+            status,
+            priority
+        }
+        navigate("/", { state: handleTask });
+    };
+
+    return (
+        <div className="bg-white h-auto">
+
+            <div className="flex flex-col mb-4 ">
+                <label htmlFor="title" className="" >Title</label>
+                <input type="text" id="title" value={title} className="border-2 border-black" onChange={(e) => setTitle(e.target.value)} />
+            </div>
+
+            <div className="flex flex-col ">
+                <label htmlFor="description" className="">Description</label>
+                <textarea className="border-2 border-black" id="description" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
+            </div>
+
+            {/* Status */}
+            <div className="relative">
+                <div className="">
+                    <button className="">
+                        <span>{status}</span>
+                        <span onClick={() => { setOpenStatus(!openStatus) }}>...</span>
+                    </button>
+
+                </div>
+
+                {
+                    openStatus && (
+                        <div className="">
+                            <ul className="absolute bg-white">
+                                {allStatus.map((status, index) => (
+                                    <li className=""
+                                        key={index}
+                                        onClick={() => {
+                                            setStatus(status)
+                                            setOpenStatus(false)
+                                        }}
+                                    >
+                                        {status}
+                                    </li>
+                                ))
+                                }
+                            </ul>
+                        </div>
+                    )
+                }
+
+            </div>
+
+
+            {/* Priority */}
+            <div className="">
+                <div className="flex justify-between mt-3">
+                    <button className="" onClick={() => { setOpen(!open) }}>
+                        <span className="">{priority}</span>
+                        <span className="">...</span>
+                    </button>
+                </div>
+
+                {
+                    open && (
+                        <ul className="absolute bg-white px-2">
+                            {
+                                allPriority.map((priority, index) => (
+                                    <li
+                                        key={index}
+                                        className=""
+                                        onClick={
+                                            () => {
+                                                setPriority(priority)
+                                                setOpen(false)
+                                            }
+                                        }
+                                    >
+                                        {priority}
+                                    </li>
+                                ))
+                            }
+                        </ul>
+                    )
+                }
+            </div>
+
+            {/* Date */}
+            <div className="flex flex-col mt-3 ">
+                <label htmlFor="date" className="text-md">Select Date</label>
+                <input
+                    type="date"
+                    id="date"
+                    name="date"
+                    className="border-2 h-6 rounded"
+                />
+            </div>
+
+            <div className="flex flex-col w-full gap-2 mt-6">
+                <button className="w-full bg-orange-500 rounded-md items-center h-[30px]" onClick={() => { handleSave(task) }}>Save Changes</button>
+                <button className="w-full border-2 border-black rounded-md" onClick={() => navigate('/')}>Cancel</button>
+            </div>
+        </div >
+    )
+}
+
+export default Edit;
+
+
+
