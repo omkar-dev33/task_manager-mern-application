@@ -15,32 +15,33 @@ const Home = () => {
     const allTaskOptions = ["All Tasks", "In Progress", "Done"];
     const orderOfTasks = ["Newest First", "Oldest First"];
 
-    const [task, setTasks] = useState([]);
+    // const [task, setTasks] = useState([]);
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
 
     const [status, setStatus] = useState("To Do");
-    const allStatus = ['To Do', 'Inprogress', 'Done'];
+    const allStatus = ['To Do', 'In Progress', 'Done'];
 
     const [priority, setPriority] = useState("Medium");
     const allPriorities = ['High', 'Medium', 'Low'];
 
-    const { setTask } = useContext(TaskContext);
+    const { task, setTask } = useContext(TaskContext);
 
     const navigate = useNavigate();
 
     const addTask = () => {
 
         if (!title || !description) {
-            window.alert("Both feilds are required");
+            window.alert("Both fields are required");
         } else {
 
             const newTask = { title: title, description: description, status: status, priority: priority };
-            setTasks([...task, newTask]);
+            setTask((prev) => [...prev, newTask]);
 
             setTitle("");
             setDescription("");
-            // setStatus('')
+            setStatus("To Do");
+            setPriority("Medium");
             setPop(false);
         }
     }
@@ -144,13 +145,13 @@ const Home = () => {
 
                             <label htmlFor="title" className="">Title :</label>
                             <h3 id="title" className="font-bold my-1">{task.title}</h3>
-
+                               
                             <label htmlFor="description" className=" my-1" >Description :</label>
                             <p className="font-bold">{task.description}</p>
 
                             <div className=" mt-1 flex flex-col">
-                                <p className="">Status : {status} </p>
-                                <p className="">Priority : {priority}</p>
+                                <p className="">Status : {task.status} </p>
+                                <p className="">Priority : {task.priority}</p>
                             </div>
 
                             <button className="bg-white w-full mt-2 rounded-md" onClick={() => { handleEdit(task) }}>Edit</button>
