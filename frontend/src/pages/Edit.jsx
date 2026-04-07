@@ -17,27 +17,36 @@ const Edit = () => {
 
     const navigate = useNavigate();
 
-    const { task } = useContext(TaskContext);
+    const { task, setTask } = useContext(TaskContext);
+    const { editTask } = useContext(TaskContext);
 
     useEffect(() => {
-        if (task) {
-            setTitle(task.title);
-            setDescription(task.description);
-            setStatus(task.status || "Status");
-            setPriority(task.priority || "Priority");
+        if (editTask) {
+            setTitle(editTask.title);
+            setDescription(editTask.description);
+            setStatus(editTask.status || "Status");
+            setPriority(editTask.priority || "Priority");
         }
-    },
-        [task]);
+    }, [editTask]);
+
+
 
     const handleSave = () => {
-        const handleTask = {
-            ...task,
+
+        const updateTask = {
+            ...editTask,
             title,
             description,
             status,
             priority
-        }
-        navigate("/", { state: handleTask });
+        };
+
+        const handleTasks = task.map((t) =>
+            t.id === editTask.id ? updateTask : t
+        );
+
+        setTask(handleTasks);
+        navigate("/");
     };
 
     return (
@@ -83,7 +92,6 @@ const Edit = () => {
                         </div>
                     )
                 }
-
             </div>
 
 
@@ -132,7 +140,7 @@ const Edit = () => {
             </div>
 
             <div className="flex flex-col w-full gap-2 mt-6">
-                <button className="w-full bg-orange-500 rounded-md items-center h-[30px]" onClick={() => { handleSave(task) }}>Save Changes</button>
+                <button className="w-full bg-orange-500 rounded-md items-center h-[30px]" onClick={handleSave}>Save Changes</button>
                 <button className="w-full border-2 border-black rounded-md" onClick={() => navigate('/')}>Cancel</button>
             </div>
         </div >

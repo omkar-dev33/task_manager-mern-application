@@ -25,18 +25,18 @@ const Home = () => {
     const [priority, setPriority] = useState("Medium");
     const allPriorities = ['High', 'Medium', 'Low'];
 
-    const { task, setTask } = useContext(TaskContext);
+    const { task, setTask, setEditTask } = useContext(TaskContext);
 
     const navigate = useNavigate();
 
     const addTask = () => {
 
-        if (!title || !description) {
+        if (!title.trim() || !description.trim()) {
             window.alert("Both fields are required");
         } else {
 
-            const newTask = { title: title, description: description, status: status, priority: priority };
-            setTask((prev) => [...prev, newTask]);
+            const newTask = { id: Date.now(), title: title, description: description, status: status, priority: priority };
+            setTask((prev) => { return [...prev, newTask] });
 
             setTitle("");
             setDescription("");
@@ -47,7 +47,7 @@ const Home = () => {
     }
 
     const handleEdit = (item) => {
-        setTask(item);
+        setEditTask(item);
         navigate("/edit");
     }
 
@@ -61,53 +61,57 @@ const Home = () => {
 
             {/* All Tasks */}
             <section className="relative">
-                <button className="text-md w-full flex justify-between px-2 border-2 outline-none rounded-md mt-3" >
+                <button onClick={() => setOpen(!open)} className="text-md w-full flex justify-between px-2 border-2 outline-none rounded-md mt-3" >
                     <span className="" >{selected}</span>
-                    <span className="" onClick={() => setOpen(!open)}>...</span>
+                    <span className="" >...</span>
                 </button>
 
                 {
                     open && (
-                        <ul className="absolute w-full border bg-white mt-0 p-2">
-                            {
-                                allTaskOptions.map((option, index) => (
-                                    <li className="mb-2"
-                                        key={index}
-                                        onClick={() => {
-                                            setSelected(option)
-                                            setOpen(false)
-                                        }}
-                                    >
-                                        {option}
-                                    </li>
-                                ))
-                            }
-                        </ul>
+                        <section className="relative">
+                            <ul className="absolute w-full border bg-white mt-0 p-2">
+                                {
+                                    allTaskOptions.map((option, index) => (
+                                        <li className="mb-2"
+                                            key={index}
+                                            onClick={() => {
+                                                setSelected(option)
+                                                setOpen(false)
+                                            }}
+                                        >
+                                            {option}
+                                        </li>
+                                    ))
+                                }
+                            </ul>
+                        </section>
                     )
                 }
 
                 {/* Selected order */}
-                <button className="text-md w-full flex justify-between px-2 border-2 outline-none rounded-md mt-3" >
+                <button onClick={() => setOrder(!order)} className="text-md w-full flex justify-between px-2 border-2 outline-none rounded-md mt-3" >
                     <span className="" >{selectOrder}</span>
-                    <span className="" onClick={() => setOrder(!order)}>...</span>
+                    <span className="" >...</span>
                 </button>
 
                 {order && (
-                    <ul className="absolute w-full bg-white p-2">
-                        {
-                            orderOfTasks.map((orders) => (
-                                <li className="mb-1"
-                                    key={orders}
-                                    onClick={
-                                        () => {
-                                            setSelectedOrder(orders)
-                                            setOrder(false)
+                    <section className="relative">
+                        <ul className="absolute w-full bg-white p-2">
+                            {
+                                orderOfTasks.map((orders) => (
+                                    <li className="mb-1"
+                                        key={orders}
+                                        onClick={
+                                            () => {
+                                                setSelectedOrder(orders)
+                                                setOrder(false)
+                                            }
                                         }
-                                    }
-                                >{orders}</li>
-                            ))
-                        }
-                    </ul>
+                                    >{orders}</li>
+                                ))
+                            }
+                        </ul>
+                    </section>
                 )}
             </section>
 
@@ -139,13 +143,13 @@ const Home = () => {
 
             <div className="h-[220px] overflow-y-auto no-scrollbar">
                 {
-                    task.map((task, index) => (
+                    Array.isArray(task) && task.map((task, index) => (
 
-                        <div key={index} className="border px-2 py-2 mt-4 rounded h-auto bg-blue-300">
+                        <div key={task.id} className="border px-2 py-2 mt-4 rounded h-auto bg-blue-300">
 
                             <label htmlFor="title" className="">Title :</label>
                             <h3 id="title" className="font-bold my-1">{task.title}</h3>
-                               
+
                             <label htmlFor="description" className=" my-1" >Description :</label>
                             <p className="font-bold">{task.description}</p>
 
