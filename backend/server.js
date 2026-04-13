@@ -1,0 +1,20 @@
+import express from 'express'
+import dotenv from 'dotenv'
+import connectDB from '../backend/src/config/db.js'
+
+dotenv.config()
+
+const app = express();
+
+connectDB();
+
+app.get('/', (req, res) => {
+    res.send("Hello... buddy'ss")
+})
+
+app.listen(4000, () => {
+    console.log("Server running on port 3000")
+})
+
+
+
