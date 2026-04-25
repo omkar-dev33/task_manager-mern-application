@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import TaskContext from '../context/Taskcontext';
+import API from '../api.js'
 
 const Edit = () => {
 
@@ -30,23 +31,25 @@ const Edit = () => {
     }, [editTask]);
 
 
+    const handleSave = async () => {
+        try {
+            const res = await API.put(`/tasks/${editTask._id}`, { // API for edit Task
+                title,
+                description,
+                status,
+                priority
+            });
 
-    const handleSave = () => {
+            const updateTask = task.map((t) =>
+                t._id === editTask._id ? res.data : t
+            );
 
-        const updateTask = {
-            ...editTask,
-            title,
-            description,
-            status,
-            priority
-        };
+            setTask(updateTask);
+            navigate("/");
 
-        const handleTasks = task.map((t) =>
-            t.id === editTask.id ? updateTask : t
-        );
-
-        setTask(handleTasks);
-        navigate("/");
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     return (

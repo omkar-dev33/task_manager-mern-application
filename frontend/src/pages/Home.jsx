@@ -1,7 +1,8 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import TaskContext from '../context/Taskcontext'
 import Dropdown from '../component/Dropdown';
+import API from '../api.js';
 
 const Home = () => {
     const [open, setOpen] = useState(false);
@@ -29,20 +30,47 @@ const Home = () => {
 
     const navigate = useNavigate();
 
-    const addTask = () => {
+    useEffect(() => {
+        getTask();
+    }, [])
+
+
+    const getTask = async () => {
+        try {
+
+            const res = await API.get("/tasks"); // API to get tasks
+            setTask(res.data);
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const addTask = async () => {
 
         if (!title.trim() || !description.trim()) {
             window.alert("Both fields are required");
         } else {
 
-            const newTask = { id: Date.now(), title: title, description: description, status: status, priority: priority };
-            setTask((prev) => { return [...prev, newTask] });
+            try {
+                const res = await API.post("/tasks", { // Create Task
+                    title: title,
+                    description: description,
+                    status: status,
+                    priority: priority
+                });
 
-            setTitle("");
-            setDescription("");
-            setStatus("To Do");
-            setPriority("Medium");
-            setPop(false);
+                setTask((prev) => { return [...prev, res.data] });
+
+                setTitle("");
+                setDescription("");
+                setStatus("To Do");
+                setPriority("Medium");
+                setPop(false);
+
+            } catch (error) {
+                console.log(error);
+            }
         }
     }
 
@@ -50,6 +78,16 @@ const Home = () => {
         setEditTask(item);
         navigate("/edit");
     }
+
+    const deleteTask = async (id) => {
+        try {
+            await API.delete(`/tasks/${id}`);
+            setTask(prev => prev.filter(t => t._id !== id));
+
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     return (
         <div className="">
@@ -145,7 +183,7 @@ const Home = () => {
                 {
                     Array.isArray(task) && task.map((task, index) => (
 
-                        <div key={task.id} className="border px-2 py-2 mt-4 rounded h-auto bg-blue-300">
+                        <div key={task._id} className="border px-2 py-2 mt-4 rounded h-auto bg-blue-300">
 
                             <label htmlFor="title" className="">Title :</label>
                             <h3 id="title" className="font-bold my-1">{task.title}</h3>
@@ -158,7 +196,10 @@ const Home = () => {
                                 <p className="">Priority : {task.priority}</p>
                             </div>
 
-                            <button className="bg-white w-full mt-2 rounded-md" onClick={() => { handleEdit(task) }}>Edit</button>
+                            <div className="w-full flex flex-row gap-2">
+                                <button className="bg-white w-full mt-2 rounded-md" onClick={() => { handleEdit(task) }}>Edit</button>
+                                <button className="bg-white w-full mt-2 rounded-md" onClick={() => { deleteTask(task._id) }}>Delete</button>
+                            </div>
                         </div>
                     ))
                 }
