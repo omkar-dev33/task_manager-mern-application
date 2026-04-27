@@ -30,7 +30,6 @@ const Edit = () => {
         }
     }, [editTask]);
 
-
     const handleSave = async () => {
         try {
             const res = await API.put(`/tasks/${editTask._id}`, { // API for edit Task

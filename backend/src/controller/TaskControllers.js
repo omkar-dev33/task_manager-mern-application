@@ -11,7 +11,7 @@ export const createTask = async (req, res) => {
 
         const task = await Task.create(req.body);
         res.status(201).json(task);
-        // console.log("Fixed");
+        console.log("Fixed");
 
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });

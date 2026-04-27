@@ -34,7 +34,6 @@ const Home = () => {
         getTask();
     }, [])
 
-
     const getTask = async () => {
         try {
 
@@ -42,7 +41,7 @@ const Home = () => {
             setTask(res.data);
 
         } catch (error) {
-            console.log(error);
+            console.log("error", error.message);
         }
     }
 
@@ -80,6 +79,9 @@ const Home = () => {
     }
 
     const deleteTask = async (id) => {
+
+        if (!window.confirm('Are you sure you want to delete ?')) return;
+
         try {
             await API.delete(`/tasks/${id}`);
             setTask(prev => prev.filter(t => t._id !== id));
@@ -210,7 +212,7 @@ const Home = () => {
     )
 }
 
-export default Home
+export default Home;
 
 
 

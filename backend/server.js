@@ -2,7 +2,7 @@ import express from 'express'
 import dotenv from 'dotenv'
 import cors from 'cors'
 import taskRoutes from './src/routes/taskRoutes.js'
-import connectDB from '../backend/src/config/db.js'
+import connectDB from './src/config/db.js'
 
 dotenv.config()
 connectDB();
