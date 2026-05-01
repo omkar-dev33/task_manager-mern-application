@@ -26,6 +26,8 @@ const Home = () => {
     const [priority, setPriority] = useState("Medium");
     const allPriorities = ['High', 'Medium', 'Low'];
 
+    const [date, setDate] = useState("");
+
     const { task, setTask, setEditTask } = useContext(TaskContext);
 
     const navigate = useNavigate();
@@ -56,7 +58,8 @@ const Home = () => {
                     title: title,
                     description: description,
                     status: status,
-                    priority: priority
+                    priority: priority,
+                    date: date
                 });
 
                 setTask((prev) => { return [...prev, res.data] });
@@ -175,6 +178,8 @@ const Home = () => {
                                 setValue={setPriority}
                             />
 
+                            <input type="date" value={date} className="" onChange={(e) => setDate(e.target.value)} />
+
                             <button className="w-full bg-red-100" onClick={addTask}>ADD</button>
                         </div>
                     </div>
@@ -196,6 +201,7 @@ const Home = () => {
                             <div className=" mt-1 flex flex-col">
                                 <p className="">Status : {task.status} </p>
                                 <p className="">Priority : {task.priority}</p>
+                                <p className="">Date : {task.date ? new Date(task.date).toLocaleDateString() : "No date"}</p>
                             </div>
 
                             <div className="w-full flex flex-row gap-2">

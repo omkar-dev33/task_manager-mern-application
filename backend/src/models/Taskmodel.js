@@ -15,7 +15,12 @@ const taskSchema = new mongoose.Schema({
     priority: {
         type: String,
         default: 'Medium'
+    },
+    date: {
+        type: Date,
+        required: true
     }
+
 }, { timestamps: true });
 
 const Task = mongoose.model("Task", taskSchema);
