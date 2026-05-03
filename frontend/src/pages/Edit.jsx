@@ -21,12 +21,15 @@ const Edit = () => {
     const { task, setTask } = useContext(TaskContext);
     const { editTask } = useContext(TaskContext);
 
+    const [date, setDate] = useState("");
+
     useEffect(() => {
         if (editTask) {
             setTitle(editTask.title);
             setDescription(editTask.description);
             setStatus(editTask.status || "Status");
             setPriority(editTask.priority || "Priority");
+            setDate(editTask.date ? editTask.date.split("T")[0] : "");
         }
     }, [editTask]);
 
@@ -36,7 +39,8 @@ const Edit = () => {
                 title,
                 description,
                 status,
-                priority
+                priority,
+                date
             });
 
             const updateTask = task.map((t) =>
@@ -135,6 +139,8 @@ const Edit = () => {
                 <label htmlFor="date" className="text-md">Select Date</label>
                 <input
                     type="date"
+                    value={date}
+                    onChange={(e) => setDate(e.target.value)}
                     id="date"
                     name="date"
                     className="border-2 h-6 rounded"

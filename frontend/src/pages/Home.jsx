@@ -32,6 +32,14 @@ const Home = () => {
 
     const navigate = useNavigate();
 
+    const sortedTask = [...task];
+
+    if (selectOrder == "Newest First") {
+        sortedTask.sort((a, b) => new Date(a.date) - new Date(b.date));
+    } else if (selectOrder == "Oldest First") {
+        sortedTask.sort((a, b) => new Date(b.date) - new Date(a.date));
+    }
+
     useEffect(() => {
         getTask();
     }, [])
@@ -188,7 +196,7 @@ const Home = () => {
 
             <div className="h-[220px] overflow-y-auto no-scrollbar">
                 {
-                    Array.isArray(task) && task.map((task, index) => (
+                    Array.isArray(task) && sortedTask.map((task, index) => (
 
                         <div key={task._id} className="border px-2 py-2 mt-4 rounded h-auto bg-blue-300">
 
