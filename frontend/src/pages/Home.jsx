@@ -28,17 +28,35 @@ const Home = () => {
 
     const [date, setDate] = useState("");
 
+    const [search, setSearch] = useState("");
+
     const { task, setTask, setEditTask } = useContext(TaskContext);
 
     const navigate = useNavigate();
 
     const sortedTask = [...task];
 
-    if (selectOrder == "Newest First") {
-        sortedTask.sort((a, b) => new Date(a.date) - new Date(b.date));
-    } else if (selectOrder == "Oldest First") {
-        sortedTask.sort((a, b) => new Date(b.date) - new Date(a.date));
+    let finalTasks = [...task];
+
+
+    if (search) {
+        // Searching
+        finalTasks = finalTasks.filter((t) =>
+            t.title.toLowerCase().includes(search.toLowerCase()) ||
+            t.description.toLowerCase().includes(search.toLowerCase())
+        );
+
     }
+
+    // sorting
+    if (selectOrder == "Newest First") {
+        finalTasks.sort((a, b) => new Date(a.date) - new Date(b.date));
+    } else if (selectOrder == "Oldest First") {
+        finalTasks.sort((a, b) => new Date(b.date) - new Date(a.date));
+    }
+
+
+
 
     useEffect(() => {
         getTask();
@@ -105,7 +123,12 @@ const Home = () => {
     return (
         <div className="">
             <section className="bg-yellow-500 p-2 flex flex-col w-[300px] h-auto">
-                <input type="text" placeholder="Search task..." className="text-md p-1 border-none outline-none mb-3 rounded-md px-2" />
+                <input
+                    type="text"
+                    placeholder="Search task..."
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                />
                 <button className="rounded-lg border h-8" onClick={() => { setPop(!pop) }}>New Task</button>
             </section>
 
@@ -196,7 +219,7 @@ const Home = () => {
 
             <div className="h-[220px] overflow-y-auto no-scrollbar">
                 {
-                    Array.isArray(task) && sortedTask.map((task, index) => (
+                    Array.isArray(task) && finalTasks.map((task, index) => (
 
                         <div key={task._id} className="border px-2 py-2 mt-4 rounded h-auto bg-blue-300">
 
