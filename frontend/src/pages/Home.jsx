@@ -48,6 +48,14 @@ const Home = () => {
 
     }
 
+    // Status filter
+
+    if (selected === "In Progress") {
+        finalTasks = finalTasks.filter((t) => t.status === "In Progress");
+    } else if (selected === "Done") {
+        finalTasks = finalTasks.filter((t) => t.status === "Done");
+    }
+
     // sorting
     if (selectOrder == "Newest First") {
         finalTasks.sort((a, b) => new Date(a.date) - new Date(b.date));
