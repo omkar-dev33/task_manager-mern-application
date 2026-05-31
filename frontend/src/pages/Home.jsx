@@ -63,9 +63,6 @@ const Home = () => {
         finalTasks.sort((a, b) => new Date(b.date) - new Date(a.date));
     }
 
-
-
-
     useEffect(() => {
         getTask();
     }, [])
@@ -75,6 +72,7 @@ const Home = () => {
 
             const res = await API.get("/tasks"); // API to get tasks
             setTask(res.data);
+            console.log("Task comming...");
 
         } catch (error) {
             console.log("error", error.message);
@@ -227,28 +225,42 @@ const Home = () => {
 
             <div className="h-[220px] overflow-y-auto no-scrollbar">
                 {
-                    Array.isArray(task) && finalTasks.map((task, index) => (
+                    /* 1. Ensure 'task' is a valid array */
+                    Array.isArray(task) && (
 
-                        <div key={task._id} className="border px-2 py-2 mt-4 rounded h-auto bg-blue-300">
+                        /* 2. Check if your filtered results have items */
+                        finalTasks.length > 0 ? (
 
-                            <label htmlFor="title" className="">Title :</label>
-                            <h3 id="title" className="font-bold my-1">{task.title}</h3>
+                            // If tasks match your search/filters, render them
+                            finalTasks.map((task, index) => (
+                                <div key={task._id} className="border px-2 py-2 mt-4 rounded h-auto bg-blue-300">
+                                    <label htmlFor="title" className="">Title :</label>
+                                    <h3 id="title" className="font-bold my-1">{task.title}</h3>
 
-                            <label htmlFor="description" className=" my-1" >Description :</label>
-                            <p className="font-bold">{task.description}</p>
+                                    <label htmlFor="description" className=" my-1" >Description :</label>
+                                    <p className="font-bold">{task.description}</p>
 
-                            <div className=" mt-1 flex flex-col">
-                                <p className="">Status : {task.status} </p>
-                                <p className="">Priority : {task.priority}</p>
-                                <p className="">Date : {task.date ? new Date(task.date).toLocaleDateString() : "No date"}</p>
+                                    <div className=" mt-1 flex flex-col">
+                                        <p className="">Status : {task.status} </p>
+                                        <p className="">Priority : {task.priority}</p>
+                                        <p className="">Date : {task.date ? new Date(task.date).toLocaleDateString() : "No date"}</p>
+                                    </div>
+
+                                    <div className="w-full flex flex-row gap-2">
+                                        <button className="bg-white w-full mt-2 rounded-md" onClick={() => { handleEdit(task) }}>Edit</button>
+                                        <button className="bg-white w-full mt-2 rounded-md" onClick={() => { deleteTask(task._id) }}>Delete</button>
+                                    </div>
+                                </div>
+                            ))
+                        ) : (
+
+                            // 3. Fallback message shown when finalTasks is empty
+                            <div className="flex flex-col items-center justify-center p-6 mt-4 border border-dashed border-gray-400 rounded-md bg-gray-50 text-center">
+                                <p className="text-red-600 font-bold text-lg">Not found!</p>
+                                <p className="text-gray-500 text-xs mt-1">No tasks match your search or filter options.</p>
                             </div>
-
-                            <div className="w-full flex flex-row gap-2">
-                                <button className="bg-white w-full mt-2 rounded-md" onClick={() => { handleEdit(task) }}>Edit</button>
-                                <button className="bg-white w-full mt-2 rounded-md" onClick={() => { deleteTask(task._id) }}>Delete</button>
-                            </div>
-                        </div>
-                    ))
+                        )
+                    )
                 }
             </div>
 

@@ -62,26 +62,3 @@ export const updateTask = async (req, res) => {
         res.status(500).json({ success: false, message: error.message });
     }
 }
-
-// Sign Up 
-
-export const signUp = async () => {
-    try {
-        await API.post("/signUp")
-    } catch (error) {
-        res.status(500).json({ success: false, message: error.message });
-    }
-}
-
-// Sign In 
-
-export const signIn = async () => {
-    try {
-        await API.post("/signIn");
-    } catch (error) {
-        res.status(500).json({ success: false, message: error.message });
-    }
-}
-
-
-

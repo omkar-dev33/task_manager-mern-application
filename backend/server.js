@@ -3,6 +3,7 @@ import dotenv from 'dotenv'
 import cors from 'cors'
 import taskRoutes from './src/routes/taskRoutes.js'
 import connectDB from './src/config/db.js'
+import authRoute from './src/routes/authRoutes.js'
 
 dotenv.config()
 connectDB();
@@ -15,6 +16,9 @@ app.use(express.json()); // convert request body to json
 
 // Routes
 app.use("/api/tasks", taskRoutes);
+
+app.use("/api/auth", authRoute);
+
 
 // Test route
 app.get("/", (req, res) => {

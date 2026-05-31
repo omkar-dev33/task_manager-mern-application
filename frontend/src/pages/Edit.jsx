@@ -48,7 +48,7 @@ const Edit = () => {
             );
 
             setTask(updateTask);
-            navigate("/");
+            navigate("/home");
 
         } catch (error) {
             console.log(error);
