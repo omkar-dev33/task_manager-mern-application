@@ -13,8 +13,8 @@ function App() {
 
   return (
     <>
-      <div className="w-screen h-screen bg-red-500 flex justify-center items-center">
-        <div className="bg-white p-8 h-auto w-auto">
+      <div className="w-screen h-screen flex justify-center items-center border border-r-2">
+        <div className="bg-white p-6 h-auto w-auto border shadow-lg rounded-lg">
           <TaskProvider>
             <BrowserRouter>
               <Routes>

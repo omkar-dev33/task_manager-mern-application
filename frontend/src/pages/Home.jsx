@@ -127,32 +127,34 @@ const Home = () => {
     };
 
     return (
-        <div className="">
-            <section className="bg-yellow-500 p-2 flex flex-col w-[300px] h-auto">
+        <div className="bg-white w-[300px] h-auto">
+            <section className="flex flex-col w-auto h-auto gap-y-1">
                 <input
                     type="text"
                     placeholder="Search task..."
                     value={search}
+                    className="border rounded-md h-[27px] text-sm pl-2 shadow-sm font-extralight outline-none  hover:shadow-md"
                     onChange={(e) => setSearch(e.target.value)}
                 />
-                <button className="rounded-lg border h-8" onClick={() => { setPop(!pop) }}>New Task</button>
+                <button className="rounded-lg border h-9 mt-1 bg-orange-500 text-white font-medium hover:bg-orange-600" onClick={() => { setPop(!pop) }}> <span className="pr-1 font-bold text-[20px]">+</span>New Task</button>
+
             </section>
 
 
             {/* All Tasks */}
             <section className="relative">
-                <button onClick={() => setOpen(!open)} className="text-md w-full flex justify-between px-2 border-2 outline-none rounded-md mt-3" >
-                    <span className="" >{selected}</span>
-                    <span className="" >...</span>
+                <button onClick={() => setOpen(!open)} className="w-full h-[28px] flex justify-between items-center px-2 border-2 outline-none rounded-md mt-3 " >
+                    <span className="text-[14px] font-serif " >{selected}</span>
+                    <span className="text-sm" >^</span>
                 </button>
 
                 {
                     open && (
                         <section className="relative">
-                            <ul className="absolute w-full border bg-white mt-0 p-2">
+                            <ul className="absolute w-full h-auto border rounded-md font-serif bg-white mt-0 px-2">
                                 {
                                     allTaskOptions.map((option, index) => (
-                                        <li className="mb-2"
+                                        <li className="mt-1 mb-2 cursor-pointer hover:shadow-md text-[15px] z-[100%]" 
                                             key={index}
                                             onClick={() => {
                                                 setSelected(option)
@@ -169,17 +171,17 @@ const Home = () => {
                 }
 
                 {/* Selected order */}
-                <button onClick={() => setOrder(!order)} className="text-md w-full flex justify-between px-2 border-2 outline-none rounded-md mt-3" >
-                    <span className="" >{selectOrder}</span>
-                    <span className="" >...</span>
+                <button onClick={() => setOrder(!order)} className="w-full h-[28px] flex justify-between items-center px-2 border-2 outline-none rounded-md mt-3 " >
+                    <span className="text-[14px] font-serif" >{selectOrder}</span>
+                    <span className="text-sm" >^</span>
                 </button>
 
                 {order && (
                     <section className="relative">
-                        <ul className="absolute w-full bg-white p-2">
+                        <ul className="absolute w-full h-auto border rounded-md font-serif bg-white mt-0 px-2">
                             {
                                 orderOfTasks.map((orders) => (
-                                    <li className="mb-1"
+                                    <li className="mt-1 mb-2 cursor-pointer hover:shadow-md text-[15px]" 
                                         key={orders}
                                         onClick={
                                             () => {
@@ -225,13 +227,11 @@ const Home = () => {
 
             <div className="h-[220px] overflow-y-auto no-scrollbar">
                 {
-                    /* 1. Ensure 'task' is a valid array */
                     Array.isArray(task) && (
 
-                        /* 2. Check if your filtered results have items */
                         finalTasks.length > 0 ? (
 
-                            // If tasks match your search/filters, render them
+
                             finalTasks.map((task, index) => (
                                 <div key={task._id} className="border px-2 py-2 mt-4 rounded h-auto bg-blue-300">
                                     <label htmlFor="title" className="">Title :</label>
