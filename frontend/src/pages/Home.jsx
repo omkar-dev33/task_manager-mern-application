@@ -154,7 +154,7 @@ const Home = () => {
                             <ul className="absolute w-full h-auto border rounded-md font-serif bg-white mt-0 px-2">
                                 {
                                     allTaskOptions.map((option, index) => (
-                                        <li className="mt-1 mb-2 cursor-pointer hover:shadow-md text-[15px] z-[100%]" 
+                                        <li className="mt-1 mb-2 cursor-pointer hover:shadow-md text-[15px] z-[100%]"
                                             key={index}
                                             onClick={() => {
                                                 setSelected(option)
@@ -181,7 +181,7 @@ const Home = () => {
                         <ul className="absolute w-full h-auto border rounded-md font-serif bg-white mt-0 px-2">
                             {
                                 orderOfTasks.map((orders) => (
-                                    <li className="mt-1 mb-2 cursor-pointer hover:shadow-md text-[15px]" 
+                                    <li className="mt-1 mb-2 cursor-pointer hover:shadow-md text-[15px]"
                                         key={orders}
                                         onClick={
                                             () => {
@@ -225,7 +225,7 @@ const Home = () => {
                 )
             }
 
-            <div className="h-[220px] overflow-y-auto no-scrollbar">
+            <div className="h-[270px] overflow-y-auto no-scrollbar ">
                 {
                     Array.isArray(task) && (
 
@@ -233,22 +233,22 @@ const Home = () => {
 
 
                             finalTasks.map((task, index) => (
-                                <div key={task._id} className="border px-2 py-2 mt-4 rounded h-auto bg-blue-300">
-                                    <label htmlFor="title" className="">Title :</label>
-                                    <h3 id="title" className="font-bold my-1">{task.title}</h3>
+                                <div key={task._id} className="border px-2 py-2 mt-4 rounded h-auto bg-blue-100 shadow-lg">
+                                    <label htmlFor="title" className="font-medium text-[16px]">Title :</label>
+                                    <h3 id="title" className="font-serif text-[18px] ">{task.title}</h3>
 
-                                    <label htmlFor="description" className=" my-1" >Description :</label>
-                                    <p className="font-bold">{task.description}</p>
+                                    <label htmlFor="description" className="font-medium my-1" >Description :</label>
+                                    <p className="font-serif">{task.description.length > 50 ? task.description.slice(0, 20) + "..." : task.description}</p>
 
-                                    <div className=" mt-1 flex flex-col">
-                                        <p className="">Status : {task.status} </p>
-                                        <p className="">Priority : {task.priority}</p>
-                                        <p className="">Date : {task.date ? new Date(task.date).toLocaleDateString() : "No date"}</p>
+                                    <div className="mt-2 flex flex-col">
+                                        <p className="text-[15px]"><span className="font-medium text-[15px]">Status : </span> {task.status} </p>
+                                        <p className="text-[15px]"><span className="font-medium text-[15px]">Priority : </span> {task.priority}</p>
+                                        <p className="text-[15px]"><span className="font-medium text-[15px]">Date : </span> {task.date ? new Date(task.date).toLocaleDateString() : "No date"}</p>
                                     </div>
 
                                     <div className="w-full flex flex-row gap-2">
-                                        <button className="bg-white w-full mt-2 rounded-md" onClick={() => { handleEdit(task) }}>Edit</button>
-                                        <button className="bg-white w-full mt-2 rounded-md" onClick={() => { deleteTask(task._id) }}>Delete</button>
+                                        <button className="bg-yellow-500 hover:bg-yellow-600  w-full mt-2 rounded-md text-[15px]" onClick={() => { handleEdit(task) }}>Edit</button>
+                                        <button className="bg-red-400 hover:bg-red-500 w-full mt-2 rounded-md text-[15px]" onClick={() => { deleteTask(task._id) }}>Delete</button>
                                     </div>
                                 </div>
                             ))

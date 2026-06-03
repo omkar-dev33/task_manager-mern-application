@@ -149,7 +149,7 @@ const Edit = () => {
 
             <div className="flex flex-col w-full gap-2 mt-6">
                 <button className="w-full bg-orange-500 rounded-md items-center h-[30px]" onClick={handleSave}>Save Changes</button>
-                <button className="w-full border-2 border-black rounded-md" onClick={() => navigate('/')}>Cancel</button>
+                <button className="w-full border-2 border-black rounded-md" onClick={() => navigate('/home')}>Cancel</button>
             </div>
         </div >
     )
