@@ -200,26 +200,83 @@ const Home = () => {
 
             {
                 pop && (
-                    <div onClick={() => setPop(false)} className="fixed inset-0 bg-blue-500/40 flex flex-col items-center justify-center z-50">
-                        <div onClick={(e) => e.stopPropagation()} className="bg-green-600 w-[350px] flex flex-col items-start gap-3 justify-center p-4 rounded-lg shadow-lg">
-                            <input className="w-full p-2" placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)} />
-                            <textarea className="min-w-full p-2" placeholder="Description" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
+                    <div
+                        onClick={() => setPop(false)}
+                        className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 px-4"
+                    >
 
-                            <Dropdown
-                                options={allStatus}
-                                value={status}
-                                setValue={setStatus}
+                        <div
+                            onClick={(e) => e.stopPropagation()}
+                            className="bg-white w-full max-w-md rounded-xl shadow-lg p-6"
+                        >
+
+                            <h1 className="text-2xl font-semibold text-center text-gray-700 mb-6">
+                                New Task
+                            </h1>
+
+                            {/* Title */}
+                            <input
+                                type="text"
+                                placeholder="Enter Title"
+                                value={title}
+                                onChange={(e) => setTitle(e.target.value)}
+                                className="w-full border border-gray-300 rounded-md px-3 py-2 mb-4 outline-none focus:border-orange-400"
                             />
 
-                            <Dropdown
-                                options={allPriorities}
-                                value={priority}
-                                setValue={setPriority}
+                            {/* Description */}
+                            <textarea
+                                placeholder="Enter Description"
+                                value={description}
+                                onChange={(e) => setDescription(e.target.value)}
+                                rows="4"
+                                className="w-full border border-gray-300 rounded-md px-3 py-2 mb-4 resize-none outline-none focus:border-orange-400"
                             />
 
-                            <input type="date" value={date} className="" onChange={(e) => setDate(e.target.value)} />
+                            {/* Status */}
+                            <div className="mb-4">
+                                <Dropdown
+                                    options={allStatus}
+                                    value={status}
+                                    setValue={setStatus}
+                                />
+                            </div>
 
-                            <button className="w-full bg-red-100" onClick={addTask}>ADD</button>
+                            {/* Priority */}
+                            <div className="mb-4">
+                                <Dropdown
+                                    options={allPriorities}
+                                    value={priority}
+                                    setValue={setPriority}
+                                />
+                            </div>
+
+                            {/* Date */}
+                            <input
+                                type="date"
+                                value={date}
+                                onChange={(e) => setDate(e.target.value)}
+                                className="w-full border border-gray-300 rounded-md px-3 py-2 mb-6 outline-none focus:border-orange-400"
+                            />
+
+                            {/* Buttons */}
+                            <div className="flex gap-3">
+
+                                <button
+                                    onClick={addTask}
+                                    className="w-full bg-orange-500 hover:bg-orange-600 text-white py-2 rounded-md transition"
+                                >
+                                    Add Task
+                                </button>
+
+                                <button
+                                    onClick={() => setPop(false)}
+                                    className="w-full border border-gray-400 py-2 rounded-md hover:bg-gray-100 transition"
+                                >
+                                    Cancel
+                                </button>
+
+                            </div>
+
                         </div>
                     </div>
                 )

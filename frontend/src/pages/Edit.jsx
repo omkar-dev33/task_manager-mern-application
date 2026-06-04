@@ -58,9 +58,9 @@ const Edit = () => {
     return (
         <div className="bg-white h-auto">
 
-            <div className="flex flex-col mb-4 ">
+            <div className="flex flex-col mb-4 bg-blue-200 text-[16px] ">
                 <label htmlFor="title" className="" >Title</label>
-                <input type="text" id="title" value={title} className="border-2 border-black" onChange={(e) => setTitle(e.target.value)} />
+                <input type="text" id="title" value={title} className="mt-1  border rounded-md" onChange={(e) => setTitle(e.target.value)} />
             </div>
 
             <div className="flex flex-col ">
