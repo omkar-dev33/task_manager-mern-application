@@ -57,6 +57,7 @@ const Edit = () => {
 
     return (
         <div className="bg-white h-auto w-[300px] shadow-lg">
+            <h2 className="text-center mb-1">Edit Task</h2>
             <div className="flex flex-col mb-4 ">
                 <label htmlFor="title" className="font-serif text-[18px]" >Title</label>
                 <input type="text" id="title" value={title} className="mt-1 h-[29px] font-serif border-[2px] pl-1 rounded-md outline-none" onChange={(e) => setTitle(e.target.value)} />
@@ -66,73 +67,69 @@ const Edit = () => {
                 <label htmlFor="description" className="font-serif text-[18px]">Description</label>
                 <textarea className="mt-1 border-[2px] pl-1 font-serif text-[16px] rounded-md outline-none" id="description" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
             </div>
-
+            
             {/* Status */}
-            <div className="relative">
-                <div className="w-full">
-                    <button className="w-full h-[27px] bg-white flex flex-row items-center justify-between">
-                        <span className="font-serif text-[17px]">Status :</span>
-                        <span className="text-[16px]" onClick={() => { setOpenStatus(!openStatus) }}><span className="pr-2 font-serif text-[16px]">{status}</span>^</span>
-                    </button>
+            <div className="relative mb-4">
+                <button
+                    type="button"
+                    onClick={() => {
+                        setOpenStatus(!openStatus);
+                        setOpen(false);
+                    }}
+                    className="w-full h-[36px] px-3 bg-white border border-gray-300 rounded-md flex items-center justify-between"
+                >
+                    <span className="font-serif text-[17px]">Status :</span>
+                    <span className="font-serif text-[16px]">{status} ^</span>
+                </button>
 
-                </div>
-
-                {
-                    openStatus && (
-                        <div className="relative">
-                            <ul className="absolute bg-white w-full flex flex-col">
-                                {allStatus.map((status, index) => (
-                                    <li className="w-full flex justify-center"
-                                        key={index}
-                                        onClick={() => {
-                                            setStatus(status)
-                                            setOpenStatus(false)
-                                        }}
-                                    >
-                                        {status}
-                                    </li>
-                                ))
-                                }
-                            </ul>
-                        </div>
-                    )
-                }
+                {openStatus && (
+                    <ul className="absolute left-0 top-full mt-1 w-full bg-white border border-gray-300 rounded-md shadow-md z-20">
+                        {allStatus.map((item, index) => (
+                            <li
+                                key={index}
+                                className="px-3 py-2 cursor-pointer hover:bg-gray-100"
+                                onClick={() => {
+                                    setStatus(item);
+                                    setOpenStatus(false);
+                                }}
+                            >
+                                {item}
+                            </li>
+                        ))}
+                    </ul>
+                )}
             </div>
 
-
             {/* Priority */}
-            <div className="w-full">
-                <div className="mt-3">
-                    <button className="w-full flex justify-between" onClick={() => { setOpen(!open) }}>
-                        <span className="font-serif text-[17px]">Priority :</span>
-                        <span className=""><span className="font-serif pr-1">{priority}</span>^</span>
-                    </button>
-                </div>
+            <div className="relative mb-4">
+                <button
+                    type="button"
+                    onClick={() => {
+                        setOpen(!open);
+                        setOpenStatus(false);
+                    }}
+                    className="w-full h-[36px] px-3 bg-white border border-gray-300 rounded-md flex items-center justify-between"
+                >
+                    <span className="font-serif text-[17px]">Priority :</span>
+                    <span className="font-serif text-[16px]">{priority} ^</span>
+                </button>
 
-                {
-                    open && (
-                        <div className="relative">
-                            <ul className="absolute bg-white w-full flex flex-col">
-                                {
-                                    allPriority.map((priority, index) => (
-                                        <li
-                                            key={index}
-                                            className="w-full flex justify-center"
-                                            onClick={
-                                                () => {
-                                                    setPriority(priority)
-                                                    setOpen(false)
-                                                }
-                                            }
-                                        >
-                                            {priority}
-                                        </li>
-                                    ))
-                                }
-                            </ul>
-                        </div>
-                    )
-                }
+                {open && (
+                    <ul className="absolute left-0 top-full mt-1 w-full bg-white border border-gray-300 rounded-md shadow-md z-10">
+                        {allPriority.map((item, index) => (
+                            <li
+                                key={index}
+                                className="px-3 py-2 cursor-pointer hover:bg-gray-100"
+                                onClick={() => {
+                                    setPriority(item);
+                                    setOpen(false);
+                                }}
+                            >
+                                {item}
+                            </li>
+                        ))}
+                    </ul>
+                )}
             </div>
 
             {/* Date */}
