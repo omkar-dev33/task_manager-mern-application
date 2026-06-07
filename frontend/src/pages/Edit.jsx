@@ -56,34 +56,33 @@ const Edit = () => {
     };
 
     return (
-        <div className="bg-white h-auto">
-
-            <div className="flex flex-col mb-4 bg-blue-200 text-[16px] ">
-                <label htmlFor="title" className="" >Title</label>
-                <input type="text" id="title" value={title} className="mt-1  border rounded-md" onChange={(e) => setTitle(e.target.value)} />
+        <div className="bg-white h-auto w-[300px] shadow-lg">
+            <div className="flex flex-col mb-4 ">
+                <label htmlFor="title" className="font-serif text-[18px]" >Title</label>
+                <input type="text" id="title" value={title} className="mt-1 h-[29px] font-serif border-[2px] pl-1 rounded-md outline-none" onChange={(e) => setTitle(e.target.value)} />
             </div>
 
-            <div className="flex flex-col ">
-                <label htmlFor="description" className="">Description</label>
-                <textarea className="border-2 border-black" id="description" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
+            <div className="flex flex-col mb-4">
+                <label htmlFor="description" className="font-serif text-[18px]">Description</label>
+                <textarea className="mt-1 border-[2px] pl-1 font-serif text-[16px] rounded-md outline-none" id="description" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
             </div>
 
             {/* Status */}
             <div className="relative">
-                <div className="">
-                    <button className="">
-                        <span>{status}</span>
-                        <span onClick={() => { setOpenStatus(!openStatus) }}>...</span>
+                <div className="w-full">
+                    <button className="w-full h-[27px] bg-white flex flex-row items-center justify-between">
+                        <span className="font-serif text-[17px]">Status :</span>
+                        <span className="text-[16px]" onClick={() => { setOpenStatus(!openStatus) }}><span className="pr-2 font-serif text-[16px]">{status}</span>^</span>
                     </button>
 
                 </div>
 
                 {
                     openStatus && (
-                        <div className="">
-                            <ul className="absolute bg-white">
+                        <div className="relative">
+                            <ul className="absolute bg-white w-full flex flex-col">
                                 {allStatus.map((status, index) => (
-                                    <li className=""
+                                    <li className="w-full flex justify-center"
                                         key={index}
                                         onClick={() => {
                                             setStatus(status)
@@ -102,54 +101,56 @@ const Edit = () => {
 
 
             {/* Priority */}
-            <div className="">
-                <div className="flex justify-between mt-3">
-                    <button className="" onClick={() => { setOpen(!open) }}>
-                        <span className="">{priority}</span>
-                        <span className="">...</span>
+            <div className="w-full">
+                <div className="mt-3">
+                    <button className="w-full flex justify-between" onClick={() => { setOpen(!open) }}>
+                        <span className="font-serif text-[17px]">Priority :</span>
+                        <span className=""><span className="font-serif pr-1">{priority}</span>^</span>
                     </button>
                 </div>
 
                 {
                     open && (
-                        <ul className="absolute bg-white px-2">
-                            {
-                                allPriority.map((priority, index) => (
-                                    <li
-                                        key={index}
-                                        className=""
-                                        onClick={
-                                            () => {
-                                                setPriority(priority)
-                                                setOpen(false)
+                        <div className="relative">
+                            <ul className="absolute bg-white w-full flex flex-col">
+                                {
+                                    allPriority.map((priority, index) => (
+                                        <li
+                                            key={index}
+                                            className="w-full flex justify-center"
+                                            onClick={
+                                                () => {
+                                                    setPriority(priority)
+                                                    setOpen(false)
+                                                }
                                             }
-                                        }
-                                    >
-                                        {priority}
-                                    </li>
-                                ))
-                            }
-                        </ul>
+                                        >
+                                            {priority}
+                                        </li>
+                                    ))
+                                }
+                            </ul>
+                        </div>
                     )
                 }
             </div>
 
             {/* Date */}
             <div className="flex flex-col mt-3 ">
-                <label htmlFor="date" className="text-md">Select Date</label>
+                <label htmlFor="date" className="text-md font-serif mb-1">Date</label>
                 <input
                     type="date"
                     value={date}
                     onChange={(e) => setDate(e.target.value)}
                     id="date"
                     name="date"
-                    className="border-2 h-6 rounded"
+                    className="border-2 rounded outline-none h-[30px]"
                 />
             </div>
 
             <div className="flex flex-col w-full gap-2 mt-6">
-                <button className="w-full bg-orange-500 rounded-md items-center h-[30px]" onClick={handleSave}>Save Changes</button>
-                <button className="w-full border-2 border-black rounded-md" onClick={() => navigate('/home')}>Cancel</button>
+                <button className="w-full bg-orange-500 hover:bg-orange-600 rounded-md items-center h-[30px]" onClick={handleSave}>Save Changes</button>
+                <button className="w-full border-2 border-black rounded-md hover:bg-gray-100" onClick={() => navigate('/home')}>Cancel</button>
             </div>
         </div >
     )
